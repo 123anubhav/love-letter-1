@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Love Letter to Neetu</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+            font-family: 'Arial', sans-serif;
+            padding: 15px;
+            overflow-x: hidden;
+            position: relative;
+            touch-action: manipulation;
+        }
+
+        .floating-heart {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.6);
+            animation: float-up 15s linear infinite;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .letter-container {
+            width: 90%;
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 2;
+            animation: appear 1s ease-out;
+        }
+
+        .heart {
+            color: #ff4b6e;
+            font-size: 1.8em;
+            display: inline-block;
+            animation: pulse 1.5s infinite;
+            vertical-align: middle;
+        }
+
+        h1 {
+            color: #ff4b6e;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            animation: rainbow 5s linear infinite;
+        }
+
+        p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+            opacity: 0;
+            animation: fadeIn 1s ease-out forwards;
+            font-size: 1.1em;
+            padding: 8px;
+        }
+
+        p:active {
+            transform: scale(0.98);
+            background: rgba(255, 75, 110, 0.1);
+            border-radius: 8px;
+        }
+
+        .signature {
+            text-align: right;
+            font-style: italic;
+            margin-top: 25px;
+            font-size: 1.2em;
+            color: #ff4b6e;
+            animation: writeSignature 2s ease-out;
+        }
+
+        .touch-sparkle {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%);
+            pointer-events: none;
+            animation: touchSparkle 0.8s ease-out forwards;
+        }
+
+        @keyframes touchSparkle {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(2);
+                opacity: 0;
+            }
+        }
+
+        @keyframes float-up {
+            0% {
+                transform: translateY(120vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-20vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes rainbow {
+            0% { color: #ff4b6e; }
+            25% { color: #ff6b6b; }
+            50% { color: #ff8e8e; }
+            75% { color: #ffb3b3; }
+            100% { color: #ff4b6e; }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2) rotate(15deg); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes appear {
+            0% { 
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            100% { 
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes fadeIn {
+            0% { 
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .letter-container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.5em;
+            }
+
+            p {
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="letter-container">
+        <h1>To My Beloved Neetu <span class="heart">❤</span></h1>
+        <div id="letter-content"></div>
+        <div class="signature">With all my love,<br>Your Husband</div>
+    </div>
+
+    <script>
+        const messages = [
+            "My dearest Neetu,",
+            "Every morning when I wake up, my first thought is of you. Your smile brightens my darkest days, and your love gives me strength I never knew I had.",
+            "You're not just my wife, you're my best friend, my soulmate, and my everything. The way you understand me, support me, and love me unconditionally makes me fall in love with you more each day.",
+            "I cherish every moment we spend together, from our deep conversations to our comfortable silences. Your presence in my life is the greatest gift I could have ever received.",
+            "You make our house a home, and my life complete. I promise to love you more with each passing day, to hold you when you need comfort, and to always be there by your side.",
+            "Thank you for being you, for choosing me, and for making my life extraordinary."
+        ];
+
+        function createFloatingHearts() {
+            const heart = document.createElement('div');
+            heart.innerHTML = '❤';
+            heart.className = 'floating-heart';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.fontSize = (Math.random() * 15 + 8) + 'px';
+            heart.style.animationDuration = (Math.random() * 5 + 10) + 's';
+            document.body.appendChild(heart);
+            
+            setTimeout(() => {
+                heart.remove();
+            }, 15000);
+        }
+
+        function createTouchSparkle(e) {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'touch-sparkle';
+            sparkle.style.left = (e.touches[0].pageX - 25) + 'px';
+            sparkle.style.top = (e.touches[0].pageY - 25) + 'px';
+            document.body.appendChild(sparkle);
+            
+            setTimeout(() => {
+                sparkle.remove();
+            }, 800);
+        }
+
+        window.onload = function() {
+            const content = document.getElementById('letter-content');
+            
+            messages.forEach((message, index) => {
+                const p = document.createElement('p');
+                p.textContent = message;
+                p.style.animationDelay = `${index * 0.5}s`;
+                content.appendChild(p);
+            });
+
+            setInterval(createFloatingHearts, 1500);
+
+            document.addEventListener('touchstart', createTouchSparkle);
+        }
+    </script>
+</body>
+</html>
